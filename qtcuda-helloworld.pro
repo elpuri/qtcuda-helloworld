@@ -14,7 +14,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    hellocuda.cu
+    hellocuda.cu \
+    cudautils.cpp
 
 # Cuda sources
 SOURCES -= hellocuda.cu
@@ -56,4 +57,5 @@ cuda.depend_command = $$CUDA_DIR/bin/nvcc -g -G -M $$CUDA_INC $$NVCCFLAGS   ${QM
 QMAKE_EXTRA_UNIX_COMPILERS += cuda
 
 HEADERS += \
-    hellocuda.h
+    hellocuda.h \
+    cudautils.h

@@ -1,1 +1,5 @@
+*.bak
+*.pro.user.*
 *.pro.user
+moc_*
+*.autosave

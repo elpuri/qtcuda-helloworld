@@ -29,8 +29,7 @@ PROJECT_DIR = $$system(pwd)
 CUDA_SDK = /opt/NVIDIA_CUDA-5.0
 # Path to cuda toolkit install
 CUDA_DIR = /usr/local/cuda
-# GPU architecture
-CUDA_ARCH = sm_11
+
 # nvcc flags (ptxas option verbose is always useful)
 NVCCFLAGS = --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v
 # include paths
@@ -49,9 +48,10 @@ CUDA_INC = $$join(INCLUDEPATH,' -I','-I',' ')
 cuda.input = CUDA_SOURCES
 cuda.output = ${OBJECTS_DIR}${QMAKE_FILE_BASE}_cuda.o
 
-cuda.commands = $$CUDA_DIR/bin/nvcc -m64 -g -G -gencode arch=compute_20,code=sm_20 -gencode arch=compute_30,code=sm_30 -gencode arch=compute_35,code=sm_35 -c $$NVCCFLAGS $$CUDA_INC $$LIBS  ${QMAKE_FILE_NAME} -o ${QMAKE_FILE_OUT}
+# Tweak arch according to your hw's compute capability
+cuda.commands = $$CUDA_DIR/bin/nvcc -m64 -g -G -gencode arch=compute_21,code=sm_21 -c $$NVCCFLAGS $$CUDA_INC $$LIBS  ${QMAKE_FILE_NAME} -o ${QMAKE_FILE_OUT}
 
-cuda.dependency_type = TYPE_C # there was a typo here. Thanks workmate!
+cuda.dependency_type = TYPE_C
 cuda.depend_command = $$CUDA_DIR/bin/nvcc -g -G -M $$CUDA_INC $$NVCCFLAGS   ${QMAKE_FILE_NAME}
 # Tell Qt that we want add more stuff to the Makefile
 QMAKE_EXTRA_UNIX_COMPILERS += cuda
